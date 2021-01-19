@@ -1,13 +1,4 @@
-import { Application, Context, Router } from "https://deno.land/x/oak@v6.4.0/mod.ts";
-import { Session } from "https://deno.land/x/session/mod.ts";
-import { v4 } from "https://deno.land/std@0.80.0/uuid/mod.ts";
-
-import { Product } from "./../models/product.ts";
-import { TableColumn } from "./../models/tablecolumn.ts";
-
-const app = new Application();
-
-const products: Product[] = [
+const products = [
     {
         "id": "001",
         "productName": "Nektarinen gelb",
@@ -90,44 +81,18 @@ const products: Product[] = [
     }
 ];
 
-const cart: Product[] = [];
-const tablecolumns: TableColumn[] = [
-    {id: v4.generate(), title: "Produkt"},
-    {id: v4.generate(), title: "Einzelpreis"},
-    {id: v4.generate(), title: "Anzahl"},
-    {id: v4.generate(), title: "Total"},
-];
+export type Product = {
+    id: string,
+    productName: string,
+    specialOffer: number,
+    normalPrice: number,
+    imageName: string,
+    description: string,
+}
+export function getAllProducts(): Product[]{
+return products;
+}
 
-const session = new Session({
-    framework: "oak",
-    store: "memory",
-});
-
-await session.init();
-
-export const userSession = session.use()(session);
-
-const router = new Router();
-
-router
-    .get("/babashop/cart/tablecolumns", (ctx) => {
-        ctx.response.body = tablecolumns;
-        ctx.response.status = 200;
-    })
-    .get("/babashop/products", (ctx) => {
-        ctx.response.body = products;
-    })
-    .get("/babashop/products:id", (ctx) => {
-        ctx.response.body = products.find(e => e.id == ctx.params.id);
-    })
-    .post("/babashop/cart", async (ctx) => {
-        let addedProduct = await ctx.request.body({ type: "json" }).value;
-        cart.push(addedProduct);
-        ctx.response.body = 200;
-    })
-    .get("/babashop/cart/products", async (ctx) => {
-        ctx.response.body = cart;
-    });
-    
-
-export const api = router.routes();
+export function getProductById(productId: string): Product | undefined {
+return products.find(product => product.id === productId);
+}

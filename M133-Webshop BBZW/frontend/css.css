@@ -1,0 +1,26 @@
+
+.bilder {
+    width: 30%;
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    padding: 2px 16px;
+    display: flex;
+}
+
+.bild {
+    width: 30%;
+    float: left;
+    display: flex;
+}
+
+.card{
+
+    padding: 1px 16px;
+    color: red;
+    text-decoration: line-through;
+}
+
+.center{
+    text-align: center;
+}
