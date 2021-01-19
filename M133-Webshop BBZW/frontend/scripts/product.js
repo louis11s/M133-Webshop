@@ -9,7 +9,7 @@ async function fetchProduct(){
             <img class="bild" width="40%" src="/img/${product.imageName}"></img>
             <h2>${product.productName}</h2>
             <div>
-                <br><span>${product.normalPrice} CHF</span><br>
+                <br><span  class="card">${product.normalPrice} CHF</span><br>
                 <h3>Aktionspreis! </h3>
                 <h3>${product.specialOffer} CHF</h3>
             <p>${product.description}</p>

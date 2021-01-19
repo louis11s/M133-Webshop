@@ -20,11 +20,12 @@ export async function addItemToBasket(context: any, id: string) {
     await checkForSession(context);
     let basket = await context.state.session.get("basket");
     const currentAmount = await basket.get(id);
-    if (!currentAmount){
+    if (currentAmount === undefined){
         return;
     }
+
     let newAmount = currentAmount + 1;
-    basket.set(id, newAmount);
+    await basket.set(id, newAmount);
 }
 
 export async function removeItemFromBasket(context: any, id: string) {
@@ -34,10 +35,10 @@ export async function removeItemFromBasket(context: any, id: string) {
         return;
     }
     const currentAmount = await basket.get(id);
-    if (!currentAmount){
+    if (currentAmount === undefined){
         return;
     }
     let newAmount = currentAmount - 1;
     newAmount = newAmount < 0 ? 0 : newAmount;
-    basket.set(id, newAmount);
+    await basket.set(id, newAmount);
 }
